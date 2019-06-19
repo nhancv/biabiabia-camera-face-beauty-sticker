@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId "com.biabiabia.effect.app"
         minSdkVersion rootProject.minSdkVersion
@@ -21,8 +20,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':effectlib')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':effectlib')
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.jakewharton:butterknife:8.2.1'
 }

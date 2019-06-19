@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceView;
 import android.view.View;
@@ -39,10 +40,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String EFFECT_TUZI = "effect/tuzi";
-    //private static final String EFFECT_PX = "effect/piaoxin";
-    //private static final String EFFECT_FW = "effect/xinfeiwen";
+//    private static final String EFFECT_PX = "effect/piaoxin";
+//    private static final String EFFECT_FW = "effect/xinfeiwen";
 
     @BindView(R.id.specific_tip)
     protected TextView specificTip;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFirst = true;
 
     //人脸识别
-    private boolean isFaceDebug = false;//绘制人脸点
+    private boolean isFaceDebug = true;//绘制人脸点
     private static final int MESSAGE_DRAW_POINTS = 999;
     private boolean isTrackerPaused = false;
     private HandlerThread trackerHandlerThread;
@@ -270,9 +271,11 @@ public class MainActivity extends AppCompatActivity {
                     (info.orientation == 90 && (dir & 1) == 0))) {
                 dir = (dir ^ 2);
             }
-
+            long start = System.currentTimeMillis();
             float[] faces = Faces.getInstance(LibApp.getAppContext()).detect(tmp, mCameraSurfaceView.getFrameWidth(), mCameraSurfaceView.getFrameHeight(), dir);
             float[] bound = Faces.getInstance(LibApp.getAppContext()).getRect();
+            long stop = System.currentTimeMillis();
+            Log.e(TAG, "faceDetect: " + (stop - start));
             prepareCanvas(faces, bound, frontCamera);
         }
     }
